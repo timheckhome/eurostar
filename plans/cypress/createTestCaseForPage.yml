@@ -1,0 +1,88 @@
+# Instructions for GitHub Copilot to Create Cypress Test Cases for a Page
+
+## Overview
+These instructions guide GitHub Copilot in generating Cypress test cases for a single page based on an HTML fragment and page name. The tests follow the conventions outlined in `docs/cypress/storingLocators.md` and `docs/cypress/structuredCypressTests.md`, using centralized locators and structured form interactions.
+
+## Prerequisites
+- The locator object in `output/cypress/locatorObject.js` should already exist and include locators for the specified page. If not, refer to `plans/cypress/createLocatorObject.yml` to generate it first.
+- Custom commands `cy.fillForm` and `cy.validateForm` are available in `cypress/support/commands.js` as described in `docs/cypress/structuredCypressTests.md`.
+
+## Steps for Copilot
+
+### Step 1: Request Inputs
+Prompt the user to provide:
+- The name of the page (e.g., 'userProfile', 'loginPage').
+
+Use clear requests like:
+"What is the name of the page? (Use camelCase, e.g., 'userProfile')"
+
+### Step 2: Verify Locator Object
+Check that `output/cypress/locatorObject.js` contains a section for the specified page name. If not, instruct the user to run the locator creation process first or generate the locators based on the HTML.
+
+### Step 4: Create Test Data Factory Function
+Generate a function that creates a new object with dummy values for test data. This function should:
+- Be named something like `createTestObject`.
+- Return an object with keys matching the locator keys for the page.
+- Include sample data for filling forms.
+- Optionally, allow parameters to customize the data.
+
+Example:
+```javascript
+function createTestObject(overrides = {}) {
+  return {
+    firstNameField: 'John',
+    lastNameField: 'Doe',
+    emailField: 'john.doe@example.com',
+    ...overrides
+  };
+}
+```
+
+### Step 5: Generate Test File Structure
+Create a new test file in `cypress/integration/` or `cypress/e2e/` named after the page, e.g., `userProfile.spec.js`.
+Do not install cypres, just create the file with the following structure:
+- Import the locator object: `import ui from '../../output/cypress/locatorObject';`
+- Describe block for the page: `describe('Page Name Tests', () => { ... });`
+- BeforeEach hook to visit the page.
+- Multiple `it` blocks for different test scenarios.
+
+### Step 6: Implement Test Scenarios
+For each test scenario:
+- Use the factory function to create test data.
+- Use `cy.fillForm(pageName, data)` to fill the form.
+- Perform actions like clicking submit buttons.
+- Use `cy.validateForm(pageName, data)` to validate field values.
+- Add additional validations like checking for success messages, error messages, URL changes, etc.
+- Ensure multiple validations per test (at least 3-5 assertions).
+
+Example test structure:
+```javascript
+it('should submit form successfully', () => {
+  const data = createTestObject();
+  cy.fillForm('pageName', data);
+  cy.get(ui.pageName.submitButton).click();
+  cy.validateForm('pageName', data);
+  cy.get(ui.pageName.successMessage).should('be.visible');
+  cy.url().should('include', '/success');
+  // More validations...
+});
+```
+
+### Step 7: Include Edge Cases and Validations
+Generate tests for:
+- Successful form submission.
+- Validation errors (e.g., empty fields, invalid data).
+- Partial data filling.
+- Multiple validations in each test.
+
+### Step 8: Validate and Save
+Ensure the test file is syntactically correct and follows Cypress best practices. Save the file and provide a summary of the generated tests.
+
+## Best Practices for Copilot
+- Use descriptive test names and comments.
+- Follow the DRY principle by reusing the factory function.
+- Include at least one test with partial data to demonstrate flexibility.
+- Ensure tests are independent and can run in any order.
+- Use appropriate waiting strategies (Cypress handles most waits automatically).
+- Log warnings if data keys don't match locators, as per the custom commands.
+- Provide examples of how to run the tests.
