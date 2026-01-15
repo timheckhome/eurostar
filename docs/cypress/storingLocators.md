@@ -33,7 +33,7 @@ Create a file named `locators.js` (or similar) in your Cypress support or utilit
 
 ```javascript
 // locators.js
-const locators = {
+const ui = {
   loginPage: {
     usernameField: '#username',
     passwordField: '#password',
@@ -54,7 +54,7 @@ const locators = {
   // Add more pages/sections as needed
 };
 
-export default locators;
+export default ui;
 ```
 
 ### 2. Import and Use in Tests
@@ -63,23 +63,23 @@ In your Cypress test files, import the locators module and use the descriptive k
 
 ```javascript
 // Example test file
-import locators from '../support/locators';
+import ui from '../support/locators';
 
 describe('Login Tests', () => {
   it('should login successfully', () => {
     cy.visit('/login');
-    cy.get(locators.loginPage.usernameField).type('testuser');
-    cy.get(locators.loginPage.passwordField).type('password123');
-    cy.get(locators.loginPage.loginButton).click();
-    cy.get(locators.dashboard.welcomeMessage).should('be.visible');
+    cy.get(ui.loginPage.usernameField).type('testuser');
+    cy.get(ui.loginPage.passwordField).type('password123');
+    cy.get(ui.loginPage.loginButton).click();
+    cy.get(ui.dashboard.welcomeMessage).should('be.visible');
   });
 
   it('should show error for invalid credentials', () => {
     cy.visit('/login');
-    cy.get(locators.loginPage.usernameField).type('invalid');
-    cy.get(locators.loginPage.passwordField).type('wrong');
-    cy.get(locators.loginPage.loginButton).click();
-    cy.get(locators.loginPage.errorMessage).should('contain', 'Invalid credentials');
+    cy.get(ui.loginPage.usernameField).type('invalid');
+    cy.get(ui.loginPage.passwordField).type('wrong');
+    cy.get(ui.loginPage.loginButton).click();
+    cy.get(ui.loginPage.errorMessage).should('contain', 'Invalid credentials');
   });
 });
 ```

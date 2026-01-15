@@ -1,4 +1,4 @@
-const locatorObject = {
+const ui = {
   addressForm: {
     addressFormHeading: 'h1',
     addressForm: '#addressForm',
@@ -12,4 +12,4 @@ const locatorObject = {
   }
 };
 
-module.exports = locatorObject;
+module.exports = ui;

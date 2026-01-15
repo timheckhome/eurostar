@@ -31,7 +31,7 @@ Check the file `output/locatorObject.js` for the existing locator object structu
 
 The structure should be:
 ```javascript
-const locatorObject = {
+const ui = {
   pageName: {
     elementName: 'selector',
     // more elements
@@ -39,7 +39,7 @@ const locatorObject = {
   // other pages
 };
 
-module.exports = locatorObject;
+module.exports = ui;
 ```
 
 ### Step 5: Add New Page Locators
