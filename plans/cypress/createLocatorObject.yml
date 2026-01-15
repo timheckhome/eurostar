@@ -27,7 +27,7 @@ Create a list of potential locators in the format:
 Use descriptive names based on the element's purpose, type, or text content.
 
 ### Step 4: Review Existing Locator Structure
-Check the file `output/locatorObject.js` for the existing locator object structure. If the file doesn't exist, create it with the base structure as described in `docs/cypress/storingLocators.md`.
+Check the file `output/cypress/locatorObject.js` for the existing locator object structure. If the file doesn't exist, create it with the base structure as described in `docs/cypress/storingLocators.md`.
 
 The structure should be:
 ```javascript
@@ -48,7 +48,7 @@ Add the analyzed locators under a new key in the locatorObject corresponding to 
 If the page already exists, merge the new locators or update existing ones.
 
 ### Step 6: Validate and Save
-Ensure the JavaScript syntax is correct. Save the updated `output/locatorObject.js` file.
+Ensure the JavaScript syntax is correct. Save the updated `output/cypress/locatorObject.js` file.
 
 ### Step 7: Provide Usage Example
 Generate a small example of how to use these locators in a Cypress test, following the pattern in `docs/cypress/storingLocators.md`.

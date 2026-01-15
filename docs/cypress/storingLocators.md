@@ -29,10 +29,10 @@ Create a JavaScript module that exports a JSON object containing all locators. T
 
 ### 1. Create the Locators Module
 
-Create a file named `locators.js` (or similar) in your Cypress support or utilities directory.
+Create a file named `locatorObject.js` (or similar) in your Cypress support or utilities directory.
 
 ```javascript
-// locators.js
+// locatorObject.js
 const ui = {
   loginPage: {
     usernameField: '#username',
@@ -63,7 +63,7 @@ In your Cypress test files, import the locators module and use the descriptive k
 
 ```javascript
 // Example test file
-import ui from '../support/locators';
+import ui from '../output/cypress/locatorObject';
 
 describe('Login Tests', () => {
   it('should login successfully', () => {
