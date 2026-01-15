@@ -29,7 +29,7 @@ Add these commands to your `cypress/support/commands.js` file:
 
 ```javascript
 // cypress/support/commands.js
-import ui from '../../output/cypress/locatorObject';
+import ui from '../e2e/locatorObject';
 
 // Custom command to fill form fields
 Cypress.Commands.add('fillForm', (pageName, data) => {
@@ -120,7 +120,7 @@ cy.validateForm('userProfile', expectedData);
 
 ```javascript
 // cypress/integration/userProfile.spec.js
-import ui from '../output/cypress/locatorObject';
+import ui from '../e2e/locatorObject';
 
 describe('User Profile Management', () => {
   beforeEach(() => {

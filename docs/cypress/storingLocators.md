@@ -63,7 +63,7 @@ In your Cypress test files, import the locators module and use the descriptive k
 
 ```javascript
 // Example test file
-import ui from '../output/cypress/locatorObject';
+import ui from '../../cypress/e2e/locatorObject';
 
 describe('Login Tests', () => {
   it('should login successfully', () => {
