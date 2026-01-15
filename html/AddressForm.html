@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Address Form Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        button {
+            cursor: pointer;
+        }
+        #okButton {
+            background-color: #4CAF50;
+            color: white;
+        }
+        #cancelButton {
+            background-color: #f44336;
+            color: white;
+        }
+        #validationMessages {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            display: none;
+        }
+        #validationMessages.success {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+        #validationMessages.error {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <h1>Example Address Form</h1>
+    <form id="addressForm">
+        <label for="streetAddress">Street Address</label>
+        <input type="text" id="streetAddress" placeholder="Enter street address">
+
+        <label for="city">City</label>
+        <input type="text" id="city" placeholder="Enter city">
+
+        <label for="state">State</label>
+        <select id="state">
+            <option value="">Select a state</option>
+            <option value="CA">California</option>
+            <option value="TX">Texas</option>
+            <option value="NY">New York</option>
+            <option value="FL">Florida</option>
+        </select>
+
+        <label for="zipCode">Zip Code</label>
+        <input type="text" id="zipCode" placeholder="Enter zip code">
+
+        <button type="button" id="okButton">OK</button>
+        <button type="button" id="cancelButton">Cancel</button>
+    </form>
+
+    <div id="validationMessages" class=""></div>
+
+    <script>
+        // Example script to update the validation messages
+        document.getElementById("okButton").addEventListener("click", () => {
+            const validationMessages = document.getElementById("validationMessages");
+            validationMessages.className = "success";
+            validationMessages.textContent = "Form submitted successfully!";
+            validationMessages.style.display = "block";
+        });
+
+        document.getElementById("cancelButton").addEventListener("click", () => {
+            const validationMessages = document.getElementById("validationMessages");
+            validationMessages.className = "error";
+            validationMessages.textContent = "Form submission canceled.";
+            validationMessages.style.display = "block";
+        });
+    </script>
+</body>
+</html>

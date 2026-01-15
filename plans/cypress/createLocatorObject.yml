@@ -1,0 +1,61 @@
+# Instructions for GitHub Copilot to Create Cypress Locator Objects
+
+## Overview
+These instructions guide GitHub Copilot in generating part of a Cypress UI test by creating locator objects from HTML snippets. The process involves requesting HTML, analyzing it for testable elements, and updating a centralized locator file.
+
+## Steps for Copilot
+
+### Step 1: Request HTML Snippet
+Prompt the user to provide a snippet of HTML from the page under test. Use a clear request like:
+"Provide the HTML snippet for the page you want to create locators for."
+
+### Step 2: Request Page Name
+After receiving the HTML, ask for the name of the page. Use:
+"What is the name of this page? (e.g., 'Login Page', 'Dashboard')"
+
+### Step 3: Analyze HTML for Testable Elements
+Analyze the provided HTML to identify all elements that could be used in automated testing. Focus on:
+- Elements with IDs (id attribute)
+- Elements with data-cy attributes
+- Elements with unique classes or other stable selectors
+- Form inputs, buttons, links, headings, etc.
+- Interactive elements like buttons, inputs, selects, textareas
+
+Create a list of potential locators in the format:
+- elementName: 'selector'
+
+Use descriptive names based on the element's purpose, type, or text content.
+
+### Step 4: Review Existing Locator Structure
+Check the file `output/locatorObject.js` for the existing locator object structure. If the file doesn't exist, create it with the base structure as described in `docs/cypress/storingLocators.md`.
+
+The structure should be:
+```javascript
+const locatorObject = {
+  pageName: {
+    elementName: 'selector',
+    // more elements
+  },
+  // other pages
+};
+
+module.exports = locatorObject;
+```
+
+### Step 5: Add New Page Locators
+Add the analyzed locators under a new key in the locatorObject corresponding to the page name (converted to camelCase, e.g., 'loginPage').
+
+If the page already exists, merge the new locators or update existing ones.
+
+### Step 6: Validate and Save
+Ensure the JavaScript syntax is correct. Save the updated `output/locatorObject.js` file.
+
+### Step 7: Provide Usage Example
+Generate a small example of how to use these locators in a Cypress test, following the pattern in `docs/cypress/storingLocators.md`.
+
+## Best Practices for Copilot
+- Prefer stable selectors like data-cy attributes over fragile ones like XPath
+- Use descriptive, camelCase names for locator keys
+- Group related elements logically
+- Ensure the locator object is exported properly for import in tests
+- Handle cases where the output directory doesn't exist by creating it
