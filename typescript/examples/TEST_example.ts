@@ -1,11 +1,16 @@
 import { test } from './TEST_base';
+import AddressFormPage from './PO_example';
 
 test.describe('Address Form', () => {
-  test('Enter street address', async ({ addressFormPage }) => {
+  test('Enter street address', async ({ page, eventLogger }) => {
+    eventLogger.addNarrative('Populate only the street address field.');
+    const addressFormPage = new AddressFormPage(page, eventLogger);
     await addressFormPage.setStreetAddress('123 tim street');
   });
 
-  test('Populate all fields and submit', async ({ addressFormPage }) => {
+  test('Populate all fields and submit', async ({ page, eventLogger }) => {
+    eventLogger.addNarrative('Populate all address fields and submit the form.');
+    const addressFormPage = new AddressFormPage(page, eventLogger);
     await addressFormPage.setStreetAddress('456 example avenue');
     await addressFormPage.setCity('New York');
     await addressFormPage.setState('New York');

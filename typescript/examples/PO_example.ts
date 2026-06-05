@@ -1,4 +1,5 @@
 import { Locator, Page } from '@playwright/test';
+import { EventLogger } from '../code/framework/EventLogger';
 import POBase from './PO_base';
 
 export class AddressFormPage extends POBase {
@@ -24,8 +25,8 @@ export class AddressFormPage extends POBase {
   readonly cancelButton: Locator;
   readonly validationMessages: Locator;
 
-  constructor(page: Page) {
-    super(page);
+  constructor(page: Page, eventLogger: EventLogger) {
+    super(page, eventLogger);
     this.streetAddressInput = page.locator(this.selectors.streetAddressInput);
     this.cityInput = page.locator(this.selectors.cityInput);
     this.stateSelect = page.locator(this.selectors.stateSelect);

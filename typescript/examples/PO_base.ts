@@ -1,10 +1,13 @@
 import { Locator, Page } from '@playwright/test';
+import { EventLogger } from '../code/framework/EventLogger';
 
 export class POBase {
   protected readonly page: Page;
+  protected readonly eventLogger: EventLogger;
 
-  constructor(page: Page) {
+  constructor(page: Page, eventLogger: EventLogger) {
     this.page = page;
+    this.eventLogger = eventLogger;
   }
 
   // Sets a field's value using the appropriate Playwright interaction for the
@@ -12,7 +15,9 @@ export class POBase {
   // failures easy to trace back to a specific field without reading raw selectors.
   async setElementValue(field: Locator, newValue: string, description: string): Promise<void> {
     const tagName = await field.evaluate((el) => el.tagName.toLowerCase());
-    console.log(`Set the value '${newValue}' in the ${description.toUpperCase()} ${tagName}`);
+    this.eventLogger.addMessage(
+      `Set the value '${newValue}' in the ${description.toUpperCase()} ${tagName}`
+    );
 
     switch (tagName) {
       case 'input':
@@ -37,10 +42,10 @@ export class POBase {
   }
 
   // Logs a human-readable action message then clicks the element. The descriptor
-  // is uppercased so it stands out clearly in console output during a test run.
+  // is uppercased so it stands out clearly in event logs during a test run.
   async clickElement(field: Locator, description: string, elementTypeOverride?: string): Promise<void> {
     const tagName = elementTypeOverride ?? await field.evaluate((el) => el.tagName.toLowerCase());
-    console.log(`Click the ${description.toUpperCase()} ${tagName}`);
+    this.eventLogger.addMessage(`Click the ${description.toUpperCase()} ${tagName}`);
     await field.click();
   }
 
@@ -54,7 +59,7 @@ export class POBase {
     exactMatchRequired = false
   ): Promise<void> {
     const matchType = exactMatchRequired ? 'exactly matches' : 'partially matches';
-    console.log(
+    this.eventLogger.addMessage(
       `Verify that the value '${expectedValue}' ${matchType} the element ${description.toUpperCase()}`
     );
 
