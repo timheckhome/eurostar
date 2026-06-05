@@ -1,0 +1,3 @@
+# Step 3: Document what we have done
+
+- prompt : "Create a document in typescript\docs called PageObjectPattern.md that describes the pageObject pattern that we have implemented in typescript\examples\PO_example.ts  all page objects will call the same page and have similar attributes. All page locators are private. All input elements will have getters, setters and validators unless read only when getters are skipped.   getters setters and validators follow a strict naming convention, buttons and other clickable elements will have a click method.  most methods are powered by helper methods that exist in typescript\code\framework\POBase.ts . " 

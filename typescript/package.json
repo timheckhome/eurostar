@@ -5,11 +5,11 @@
   "main": "index.js",
   "directories": {
     "doc": "docs",
-    "example": "examples"
+    "test": "code/tests"
   },
   "scripts": {
-    "test": "playwright test examples/TEST_example.ts",
-    "test:debug": "playwright test --debug examples/TEST_example.ts"
+    "test": "playwright test",
+    "test:debug": "playwright test --debug"
   },
   "keywords": [],
   "author": "",

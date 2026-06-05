@@ -1,6 +1,6 @@
 import { test as base, expect } from '@playwright/test';
 import { mkdir } from 'fs/promises';
-import { EventLogger } from '../code/framework/EventLogger';
+import { EventLogger } from './EventLogger';
 
 type FoundationTestFixtures = {
   eventLogger: EventLogger;

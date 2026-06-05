@@ -1,4 +1,4 @@
-import { test } from './TEST_base';
+import { test } from '../code/framework/TestBase';
 import AddressFormPage from './PO_example';
 
 test.describe('Address Form', () => {

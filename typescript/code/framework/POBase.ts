@@ -1,5 +1,5 @@
 import { Locator, Page } from '@playwright/test';
-import { EventLogger } from '../code/framework/EventLogger';
+import { EventLogger } from './EventLogger';
 
 export class POBase {
   protected readonly page: Page;

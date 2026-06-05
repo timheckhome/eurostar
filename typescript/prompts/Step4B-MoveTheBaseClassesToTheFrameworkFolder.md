@@ -1,0 +1,3 @@
+- Prompt: "I no longer want to run the tests or use the code in typescript\examples for testing.  I want to run the tests in typescript\code\tests going forward. Update whatever is needed. Since the new folders are basically empty there is no need to run anything at this point. "
+
+- Prompt: "Move typescript\examples\PO_base.ts and typescript\examples\TEST_base.ts to typescript\code\framework and adjust names to match the classes inside those files.  Update all references to those files"

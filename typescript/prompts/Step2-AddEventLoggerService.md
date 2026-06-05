@@ -8,7 +8,7 @@
 
 - Prompt: "create a beforeEach method in the base class and have that method do the actual navigation. also have this method start up an instance of typescript\code\framework\EventLogger.ts that can be referenced from any test. Add a call to Event logger at the top of every test that just logs a message describing what the test is doing."
 
-- Prompt: "add an afterEach in TEST_base.ts that automatically calls createDocument with a per-test markdown filename."
+- Prompt: "add an afterEach in TestBase.ts that automatically calls createDocument with a per-test markdown filename."
 
 - Prompt: "Create a beforeAll method where we define the output folder (hardcoded root plus a time stamp for this suite execution) and simplify the result files names to be just the text in test.describe, a ~ character as a delimiter, and the name of the test. Put all MD docs in the folder created for this suite's execution."
 
@@ -33,10 +33,10 @@
 TEST_example.ts:9
 In the current renderer, message events become list items, while only narrative events become boxed HTML blocks:
 EventLogger.ts:49
-There is also a second issue behind the “no entries” impression: only explicit EventLogger calls are written to the markdown file. The detailed actions like setting fields and clicking buttons are still going to console.log in PO_base.ts, so they never reach EventLogger.”
+There is also a second issue behind the “no entries” impression: only explicit EventLogger calls are written to the markdown file. The detailed actions like setting fields and clicking buttons are still going to console.log in POBase.ts, so they never reach EventLogger.”
 
-- Prompt: "change the test to use addNarrative(...) for that top-level description. I want the step-by-step actions to appear in the markdown too. change the logging in PO_base.ts through EventLogger instead of console.log."
+- Prompt: "change the test to use addNarrative(...) for that top-level description. I want the step-by-step actions to appear in the markdown too. change the logging in POBase.ts through EventLogger instead of console.log."
 
 - Observation: Timmy made a silly mistake. AI is correct. Thank god I didn’t embarrass myself to a human like that.  The next prompt will be delivered with my tail between my legs.
 
-- Prompt: "change the test to use [addNarrative(...)](file:///c%3A/Repos/eurostar/typescript/code/framework/EventLogger.ts#17%2C10) for that top-level description. I want the step-by-step actions to appear in the markdown too. change the logging in [PO_base.ts](file:///c%3A/Repos/eurostar/typescript/examples/PO_base.ts) through EventLogger instead of [console.log](file:///c%3A/Repos/eurostar/typescript/node_modules/%40types/node/web-globals/console.d.ts#8%2C9)."
+- Prompt: "change the test to use [addNarrative(...)](file:///c%3A/Repos/eurostar/typescript/code/framework/EventLogger.ts#17%2C10) for that top-level description. I want the step-by-step actions to appear in the markdown too. change the logging in [POBase.ts](file:///c%3A/Repos/eurostar/typescript/code/framework/POBase.ts) through EventLogger instead of [console.log](file:///c%3A/Repos/eurostar/typescript/node_modules/%40types/node/web-globals/console.d.ts#8%2C9)."
