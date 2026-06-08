@@ -1,7 +1,15 @@
 import { test } from '../code/framework/TestBase';
 import AddressFormPage from './PO_example';
 
+async function testSetup(): Promise<void> {
+  // put additional setup code here
+}
+
 test.describe('Address Form', () => {
+  test.beforeEach(async () => {
+    await testSetup();
+  });
+
   test('Enter street address', async ({ page, eventLogger }) => {
     eventLogger.addNarrative('Populate only the street address field.');
     const addressFormPage = new AddressFormPage(page, eventLogger);

@@ -4,7 +4,7 @@ import { dirname } from "path";
 interface LoggedEvent {
   timestamp: Date;
   message: string;
-  enventType: "message" | "narrative";
+  enventType: "message" | "narrative" | "failure" | "stackTrace";
 }
 
 export class EventLogger {
@@ -16,6 +16,14 @@ export class EventLogger {
 
   public addNarrative(message: string): void {
     this.addEvent(message, "narrative");
+  }
+
+  public addFailure(message: string): void {
+    this.addEvent(message, "failure");
+  }
+
+  public addStackTrace(stackTrace: string): void {
+    this.addEvent(stackTrace, "stackTrace");
   }
 
   private addEvent(message: string, enventType: LoggedEvent["enventType"]): void {
@@ -66,6 +74,18 @@ export class EventLogger {
         '<div style="border: 1px solid #d0d7de; background-color: #f6f8fa; padding: 12px; border-radius: 6px;">',
         narrativeMessage,
         '</div>',
+      ].join("\n");
+    }
+
+    if (event.enventType === "failure") {
+      return `- <span style="color: #cf222e; font-weight: 600;">${this.escapeHtml(event.message)}</span>`;
+    }
+
+    if (event.enventType === "stackTrace") {
+      return [
+        '<pre style="margin: 0; padding: 12px; border: 1px solid #cf222e; background-color: #ffebe9; border-radius: 6px; overflow-x: auto;">',
+        this.escapeHtml(event.message),
+        '</pre>',
       ].join("\n");
     }
 

@@ -2,6 +2,22 @@ import { Locator, Page } from '@playwright/test';
 import { EventLogger } from '../framework/EventLogger';
 import POBase from '../framework/POBase';
 
+type FormModel = Record<string, unknown>;
+
+/**
+ * MBT sample payload for this page object:
+ * {
+ *   streetAddress: '1 Main St',
+ *   city: 'Seattle',
+ *   state: 'California',
+ *   zipCode: '98101'
+ * }
+ *
+ * Notes:
+ * - Keys are matched case-insensitively.
+ * - Unknown keys are ignored.
+ * - Any subset of supported keys can be provided.
+ */
 export class AddressFormPage extends POBase {
   private readonly selectors = {
     heading: 'h1',
@@ -21,6 +37,8 @@ export class AddressFormPage extends POBase {
   private readonly okButton: Locator;
   private readonly cancelButton: Locator;
   private readonly validationMessages: Locator;
+  private readonly fillFormHandlers: Record<string, (value: unknown) => Promise<void>>;
+  private readonly validateFormHandlers: Record<string, (value: unknown) => Promise<void>>;
 
   constructor(page: Page, eventLogger: EventLogger) {
     super(page, eventLogger);
@@ -31,6 +49,20 @@ export class AddressFormPage extends POBase {
     this.okButton = page.locator(this.selectors.okButton);
     this.cancelButton = page.locator(this.selectors.cancelButton);
     this.validationMessages = page.locator(this.selectors.validationMessages);
+
+    this.fillFormHandlers = {
+      streetaddress: async (value) => this.setStreetAddress(String(value ?? '')),
+      city: async (value) => this.setCity(String(value ?? '')),
+      state: async (value) => this.setState(String(value ?? '')),
+      zipcode: async (value) => this.setZipCode(String(value ?? '')),
+    };
+
+    this.validateFormHandlers = {
+      streetaddress: async (value) => this.validateStreetAddress(String(value ?? '')),
+      city: async (value) => this.validateCity(String(value ?? '')),
+      state: async (value) => this.validateState(String(value ?? '')),
+      zipcode: async (value) => this.validateZipCode(String(value ?? '')),
+    };
   }
 
   async getHeadingText(): Promise<string> {
@@ -109,6 +141,36 @@ export class AddressFormPage extends POBase {
       'validation message',
       exactMatchRequired
     );
+  }
+
+  async fillForm(data: FormModel | null | undefined): Promise<void> {
+    if (!data) {
+      return;
+    }
+
+    for (const [rawKey, value] of Object.entries(data)) {
+      const handler = this.fillFormHandlers[rawKey.toLowerCase()];
+      if (!handler) {
+        continue;
+      }
+
+      await handler(value);
+    }
+  }
+
+  async validateForm(expected: FormModel | null | undefined): Promise<void> {
+    if (!expected) {
+      return;
+    }
+
+    for (const [rawKey, value] of Object.entries(expected)) {
+      const validator = this.validateFormHandlers[rawKey.toLowerCase()];
+      if (!validator) {
+        continue;
+      }
+
+      await validator(value);
+    }
   }
 }
 
