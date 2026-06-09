@@ -1,6 +1,6 @@
 # Step 1: Define What Good Looks Like
 
-- Prompt: "Create an example typescript page object that I can use as a template for a test automation presentation.  The new file should be called \"PO_example.ts\" and created in the directory typescript\examples . The page object should represent the page html\AddressForm.html"
+- Prompt: "Create an example typescript page object that I can use as a template for a test automation presentation.  The new file should be called \"PO_example.ts\" and created in the directory typescript\examples . The page object should represent the page html\SUT_ForDemo\address-collection.html"
 - Observation: It read the rest of the repo and followed patterns from another example. Now let's tell AI not to do that anymore.
 
 - Prompt: "I am working on a new isolated example for typescript. ignore everything outside of the typescript folder and just create a normal looking traditional feel typescript page object that any typescript tester would understand. Add narrative comments where appropriate since this is an example that will be referenced later."
@@ -43,7 +43,7 @@
 - Prompt: "add a similar method to validate the ValidationMessage field"
 - Observation: That is a pretty good page object pattern. Let's make a test.
 
-- Prompt: " create a new file in typescript\examples called TEST_example.ts that is a simple test that starts playwright, opens the file  html\AddressForm.html in a browser and enters the value \"123 tim street\" in the address line. No validation is needed at this time."
+- Prompt: " create a new file in typescript\examples called TEST_example.ts that is a simple test that starts playwright, opens the file  html\SUT_ForDemo\address-collection.html in a browser and enters the value \"123 tim street\" in the address line. No validation is needed at this time."
 - Observation: Since we did not tell it to do otherwise, it is ignoring our page object that we just made.
 
 - Prompt: "refactor the test to use the page object typescript\examples\PO_example.ts"

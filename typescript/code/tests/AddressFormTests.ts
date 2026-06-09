@@ -1,5 +1,8 @@
+import { Page } from '@playwright/test';
 import { test } from '../framework/TestBase';
+import { EventLogger } from '../framework/EventLogger';
 import AddressFormPage from '../pages/AddressFormPage';
+import IndexPage from '../pages/IndexPage';
 
 type AddressFormModel = Record<string, unknown>;
 
@@ -16,13 +19,14 @@ const missingZipCodeModel: AddressFormModel = {
   state: 'New York',
 };
 
-async function testSetup(): Promise<void> {
-  // put additional setup code here
+async function testSetup(page: Page, eventLogger: EventLogger): Promise<void> {
+  const indexPage = new IndexPage(page, eventLogger);
+  await indexPage.clickAddressCollectionLink();
 }
 
 test.describe('Address Form MBT Tests', () => {
-  test.beforeEach(async () => {
-    await testSetup();
+  test.beforeEach(async ({ page, eventLogger }) => {
+    await testSetup(page, eventLogger);
   });
 
   test('Validate MBT can fill and validate all fields with real-looking values', async ({
@@ -30,11 +34,12 @@ test.describe('Address Form MBT Tests', () => {
     eventLogger,
   }) => {
     eventLogger.addNarrative(
-      'Use MBT payload to fill all address fields, then validate the same fields from the UI.'
+      'Use MBT payload to fill all address fields on the Address Collection page, then validate the same fields from the UI.'
     );
 
     const addressFormPage = new AddressFormPage(page, eventLogger);
 
+    await addressFormPage.validateHeading('Address Collection', true);
     await addressFormPage.fillForm(validAddressModel);
     await addressFormPage.validateForm(validAddressModel);
   });
@@ -44,14 +49,14 @@ test.describe('Address Form MBT Tests', () => {
     eventLogger,
   }) => {
     eventLogger.addNarrative(
-      'Fill all required fields from MBT model, submit with OK, and verify success feedback.'
+      'Fill all required fields from MBT model, submit the address form, and verify success feedback.'
     );
 
     const addressFormPage = new AddressFormPage(page, eventLogger);
 
     await addressFormPage.fillForm(validAddressModel);
-    await addressFormPage.clickOkButton();
-    await addressFormPage.validateValidationMessage('Form submitted successfully!', true);
+    await addressFormPage.clickSubmitAddressButton();
+    await addressFormPage.validateAddressMessage('Address saved successfully.', true);
   });
 
   test('Validate failure message is shown when zip code is not filled and submit is pressed', async ({
@@ -59,14 +64,14 @@ test.describe('Address Form MBT Tests', () => {
     eventLogger,
   }) => {
     eventLogger.addNarrative(
-      'Submit the form without zip code and verify failure feedback is displayed.'
+      'Submit the address form without zip code and verify failure feedback is displayed.'
     );
 
     const addressFormPage = new AddressFormPage(page, eventLogger);
 
     await addressFormPage.fillForm(missingZipCodeModel);
     await addressFormPage.validateForm(missingZipCodeModel);
-    await addressFormPage.clickOkButton();
-    await addressFormPage.validateValidationMessage('Zip code is required.', true);
+    await addressFormPage.clickSubmitAddressButton();
+    await addressFormPage.validateAddressMessage('Please complete all address fields.', true);
   });
 });

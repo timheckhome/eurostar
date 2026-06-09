@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo SUT Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f7f7f7;
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: #ffffff;
+            border: 1px solid #d9d9d9;
+            border-radius: 6px;
+            padding: 20px;
+        }
+        h1 {
+            margin-top: 0;
+        }
+        nav a {
+            display: inline-block;
+            margin: 0 12px 12px 0;
+            color: #0b5cab;
+            text-decoration: none;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        form {
+            margin-top: 20px;
+            border-top: 1px solid #ececec;
+            padding-top: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+        input, button {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 12px;
+            border: 1px solid #cfcfcf;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        #quickSearchButton {
+            background-color: #0b5cab;
+            color: white;
+            cursor: pointer;
+        }
+        #homeMessage {
+            display: none;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 8px;
+        }
+        #homeMessage.success {
+            background-color: #dbefff;
+            color: #0a3f72;
+            border: 1px solid #b8dbfa;
+        }
+        #homeMessage.error {
+            background-color: #fde2e2;
+            color: #7f1d1d;
+            border: 1px solid #f9bdbd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Simple Demo Website</h1>
+        <p>This site is intentionally basic so Playwright tests can focus on locators, flows, and assertions.</p>
+
+        <nav id="siteNav">
+            <a id="navAddress" href="address-collection.html">Address Collection</a>
+            <a id="navProfile" href="profile-setup.html">Profile Setup</a>
+            <a id="navNewsletter" href="newsletter-signup.html">Newsletter Signup</a>
+            <a id="navSupport" href="support-request.html">Support Request</a>
+        </nav>
+
+        <form id="quickSearchForm">
+            <label for="quickSearchInput">Quick Search</label>
+            <input type="text" id="quickSearchInput" placeholder="Type a keyword">
+            <button type="button" id="quickSearchButton">Search</button>
+        </form>
+
+        <div id="homeMessage"></div>
+    </div>
+
+    <script>
+        document.getElementById("quickSearchButton").addEventListener("click", () => {
+            const input = document.getElementById("quickSearchInput");
+            const message = document.getElementById("homeMessage");
+
+            if (input.value.trim() === "") {
+                message.className = "error";
+                message.textContent = "Please enter a search term.";
+            } else {
+                message.className = "success";
+                message.textContent = "Search executed for: " + input.value.trim();
+            }
+
+            message.style.display = "block";
+        });
+    </script>
+</body>
+</html>

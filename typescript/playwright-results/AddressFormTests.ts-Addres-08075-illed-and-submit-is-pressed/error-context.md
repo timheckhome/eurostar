@@ -7,12 +7,12 @@
 # Test info
 
 - Name: AddressFormTests.ts >> Address Form MBT Tests >> Validate failure message is shown when zip code is not filled and submit is pressed
-- Location: code\tests\AddressFormTests.ts:57:7
+- Location: code\tests\AddressFormTests.ts:62:7
 
 # Error details
 
 ```
-Error: validateElementText: expected exact value "Zip code is required." for "validation message", but found "Form submitted successfully!".
+Error: validateElementText: expected exact value "Please complete all address fields." for "address message", but found "Address saved successfully.".
 ```
 
 # Test source
@@ -88,7 +88,7 @@ Error: validateElementText: expected exact value "Zip code is required." for "va
   68  |     if (exactMatchRequired) {
   69  |       if (actualValue !== expectedValue) {
 > 70  |         throw new Error(
-      |               ^ Error: validateElementText: expected exact value "Zip code is required." for "validation message", but found "Form submitted successfully!".
+      |               ^ Error: validateElementText: expected exact value "Please complete all address fields." for "address message", but found "Address saved successfully.".
   71  |           `validateElementText: expected exact value "${expectedValue}" for "${description}", but found "${actualValue}".`
   72  |         );
   73  |       }

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newsletter Signup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .page {
+            max-width: 420px;
+            margin: 0 auto;
+        }
+        .top-links {
+            margin-bottom: 14px;
+        }
+        .top-links a {
+            color: #0b5cab;
+            text-decoration: none;
+        }
+        form {
+            padding: 18px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 14px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        #joinNewsletterButton {
+            background-color: #2f8f4e;
+            color: white;
+            cursor: pointer;
+        }
+        #newsletterMessage {
+            margin-top: 14px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        #newsletterMessage.success {
+            color: #155724;
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+        }
+        #newsletterMessage.error {
+            color: #721c24;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="top-links">
+            <a id="backToHomeFromNewsletter" href="index.html">Back to Home</a>
+        </div>
+
+        <h1>Newsletter Signup</h1>
+        <p>Stay updated with product announcements and tips.</p>
+
+        <form id="newsletterForm">
+            <label for="signupName">Full Name</label>
+            <input type="text" id="signupName" placeholder="Enter full name">
+
+            <label for="signupEmail">Email Address</label>
+            <input type="email" id="signupEmail" placeholder="Enter email address">
+
+            <label for="frequency">Email Frequency</label>
+            <select id="frequency">
+                <option value="">Select frequency</option>
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+            </select>
+
+            <label for="interestTopic">Topic Interest</label>
+            <input type="text" id="interestTopic" placeholder="Examples: testing, release notes">
+
+            <button type="button" id="joinNewsletterButton">Join Newsletter</button>
+        </form>
+
+        <div id="newsletterMessage"></div>
+    </div>
+
+    <script>
+        document.getElementById("joinNewsletterButton").addEventListener("click", () => {
+            const name = document.getElementById("signupName").value.trim();
+            const email = document.getElementById("signupEmail").value.trim();
+            const frequency = document.getElementById("frequency").value;
+            const message = document.getElementById("newsletterMessage");
+
+            if (!name || !email || !frequency) {
+                message.className = "error";
+                message.textContent = "Name, email, and frequency are required.";
+            } else {
+                message.className = "success";
+                message.textContent = "Thanks for joining. Updates will be sent " + frequency + ".";
+            }
+
+            message.style.display = "block";
+        });
+    </script>
+</body>
+</html>

@@ -21,34 +21,39 @@ type FormModel = Record<string, unknown>;
 export class AddressFormPage extends POBase {
   private readonly selectors = {
     heading: 'h1',
+    backToHomeLink: '#backToHomeFromAddress',
     streetAddressInput: '#streetAddress',
     cityInput: '#city',
     stateSelect: '#state',
     zipCodeInput: '#zipCode',
-    okButton: '#okButton',
-    cancelButton: '#cancelButton',
-    validationMessages: '#validationMessages',
+    submitAddressButton: '#submitAddressButton',
+    clearAddressButton: '#clearAddressButton',
+    addressMessage: '#addressMessage',
   } as const;
 
+  private readonly heading: Locator;
+  private readonly backToHomeLink: Locator;
   private readonly streetAddressInput: Locator;
   private readonly cityInput: Locator;
   private readonly stateSelect: Locator;
   private readonly zipCodeInput: Locator;
-  private readonly okButton: Locator;
-  private readonly cancelButton: Locator;
-  private readonly validationMessages: Locator;
+  private readonly submitAddressButton: Locator;
+  private readonly clearAddressButton: Locator;
+  private readonly addressMessage: Locator;
   private readonly fillFormHandlers: Record<string, (value: unknown) => Promise<void>>;
   private readonly validateFormHandlers: Record<string, (value: unknown) => Promise<void>>;
 
   constructor(page: Page, eventLogger: EventLogger) {
     super(page, eventLogger);
+    this.heading = page.locator(this.selectors.heading);
+    this.backToHomeLink = page.locator(this.selectors.backToHomeLink);
     this.streetAddressInput = page.locator(this.selectors.streetAddressInput);
     this.cityInput = page.locator(this.selectors.cityInput);
     this.stateSelect = page.locator(this.selectors.stateSelect);
     this.zipCodeInput = page.locator(this.selectors.zipCodeInput);
-    this.okButton = page.locator(this.selectors.okButton);
-    this.cancelButton = page.locator(this.selectors.cancelButton);
-    this.validationMessages = page.locator(this.selectors.validationMessages);
+    this.submitAddressButton = page.locator(this.selectors.submitAddressButton);
+    this.clearAddressButton = page.locator(this.selectors.clearAddressButton);
+    this.addressMessage = page.locator(this.selectors.addressMessage);
 
     this.fillFormHandlers = {
       streetaddress: async (value) => this.setStreetAddress(String(value ?? '')),
@@ -65,8 +70,37 @@ export class AddressFormPage extends POBase {
     };
   }
 
-  async getHeadingText(): Promise<string> {
-    return (await this.page.locator(this.selectors.heading).textContent()) ?? '';
+  async getHeading(): Promise<string> {
+    return (await this.heading.textContent()) ?? '';
+  }
+
+  async validateHeading(expectedValue: string, exactMatchRequired = false): Promise<void> {
+    const matchType = exactMatchRequired ? 'exactly matches' : 'partially matches';
+    this.eventLogger.addMessage(
+      `Verify that the value '${expectedValue}' ${matchType} the element HEADING`
+    );
+
+    const actualValue = await this.getHeading();
+
+    if (exactMatchRequired) {
+      if (actualValue !== expectedValue) {
+        throw new Error(
+          `validateHeading: expected exact value "${expectedValue}" for "heading", but found "${actualValue}".`
+        );
+      }
+
+      return;
+    }
+
+    if (!actualValue.includes(expectedValue)) {
+      throw new Error(
+        `validateHeading: expected "heading" to contain "${expectedValue}", but found "${actualValue}".`
+      );
+    }
+  }
+
+  async clickBackToHomeLink(): Promise<void> {
+    await this.clickElement(this.backToHomeLink, 'back to home link');
   }
 
   async getStreetAddress(): Promise<string> {
@@ -122,23 +156,23 @@ export class AddressFormPage extends POBase {
     await this.validateElementText(this.zipCodeInput, expectedValue, 'zip code', exactMatchRequired);
   }
 
-  async clickOkButton(): Promise<void> {
-    await this.clickElement(this.okButton, 'ok', 'button');
+  async clickSubmitAddressButton(): Promise<void> {
+    await this.clickElement(this.submitAddressButton, 'submit address', 'button');
   }
 
-  async clickCancelButton(): Promise<void> {
-    await this.clickElement(this.cancelButton, 'cancel', 'button');
+  async clickClearAddressButton(): Promise<void> {
+    await this.clickElement(this.clearAddressButton, 'clear address', 'button');
   }
 
-  async getValidationMessage(): Promise<string> {
-    return (await this.validationMessages.textContent()) ?? '';
+  async getAddressMessage(): Promise<string> {
+    return this.getElementValue(this.addressMessage);
   }
 
-  async validateValidationMessage(expectedValue: string, exactMatchRequired = false): Promise<void> {
+  async validateAddressMessage(expectedValue: string, exactMatchRequired = false): Promise<void> {
     await this.validateElementText(
-      this.validationMessages,
+      this.addressMessage,
       expectedValue,
-      'validation message',
+      'address message',
       exactMatchRequired
     );
   }

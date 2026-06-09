@@ -1,6 +1,6 @@
 import { defineConfig } from '@playwright/test';
 
-const initialPageUrl = 'file:///C:/Repos/eurostar/html/AddressForm.html';
+const initialPageUrl = 'file:///C:/Repos/eurostar/html/SUT_ForDemo/index.html';
 
 export default defineConfig({
   testDir: './code/tests',

@@ -1,4 +1,4 @@
-- Prompt: "Create a page object for html\AddressForm.html following the pattern described typescript\docs\PageObjectPattern.md"
+- Prompt: "Create a page object for html\SUT_ForDemo\address-collection.html following the pattern described typescript\docs\PageObjectPattern.md"
 
 - Prompt: "Add "model based testing" (MBT) to the test typescript\code\pages\AddressFormPage.ts following the instructions typescript\docs\modelDrivenTestingPattern.MD"
 

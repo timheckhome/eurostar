@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Setup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .page {
+            max-width: 420px;
+            margin: 0 auto;
+        }
+        .top-links {
+            margin-bottom: 14px;
+        }
+        .top-links a {
+            color: #0b5cab;
+            text-decoration: none;
+        }
+        form {
+            padding: 18px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 14px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        #saveProfileButton {
+            background-color: #2f8f4e;
+            color: white;
+            cursor: pointer;
+        }
+        #cancelProfileButton {
+            background-color: #c0392b;
+            color: white;
+            cursor: pointer;
+        }
+        #profileMessage {
+            margin-top: 14px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        #profileMessage.success {
+            color: #155724;
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+        }
+        #profileMessage.error {
+            color: #721c24;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="top-links">
+            <a id="backToHomeFromProfile" href="index.html">Back to Home</a>
+        </div>
+
+        <h1>Profile Setup</h1>
+        <p>Create a simple user profile for onboarding.</p>
+
+        <form id="profileForm">
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" placeholder="Enter first name">
+
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" placeholder="Enter last name">
+
+            <label for="emailAddress">Email Address</label>
+            <input type="email" id="emailAddress" placeholder="Enter email address">
+
+            <label for="roleType">Role</label>
+            <select id="roleType">
+                <option value="">Select role</option>
+                <option value="customer">Customer</option>
+                <option value="admin">Admin</option>
+                <option value="viewer">Viewer</option>
+            </select>
+
+            <button type="button" id="saveProfileButton">Save Profile</button>
+            <button type="button" id="cancelProfileButton">Cancel</button>
+        </form>
+
+        <div id="profileMessage"></div>
+    </div>
+
+    <script>
+        document.getElementById("saveProfileButton").addEventListener("click", () => {
+            const firstName = document.getElementById("firstName").value.trim();
+            const lastName = document.getElementById("lastName").value.trim();
+            const email = document.getElementById("emailAddress").value.trim();
+            const role = document.getElementById("roleType").value;
+            const message = document.getElementById("profileMessage");
+
+            if (!firstName || !lastName || !email || !role) {
+                message.className = "error";
+                message.textContent = "Please complete all profile fields.";
+            } else {
+                message.className = "success";
+                message.textContent = "Profile saved for " + firstName + " " + lastName + ".";
+            }
+
+            message.style.display = "block";
+        });
+
+        document.getElementById("cancelProfileButton").addEventListener("click", () => {
+            const message = document.getElementById("profileMessage");
+            message.className = "error";
+            message.textContent = "Profile setup canceled.";
+            message.style.display = "block";
+        });
+    </script>
+</body>
+</html>
