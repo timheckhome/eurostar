@@ -1,0 +1,4 @@
+- Prompt: "Almost every page object that I create needs the MBT methods to them.   I create page objects using the approach described here typescript\docs\PageObjectPattern.md and MBT is defined here typescript\docs\modelDrivenTestingPattern.MD  . Create a new YML document  typescript\plans\MakePageObjectWithMBT.yml that reference both of these documents and guides an AI agent to create a page object with MBT following my standards.  The instructions should not look at the rest of the code, everything should be based strictly on the documents provided.  "
+
+- Prompt: "I do not like the duplication of the MD documents in the YML.  If things change (and they will) I would like to only have to worry about that in one place.  Please provide redundant information in the YML only when necessary"
+
