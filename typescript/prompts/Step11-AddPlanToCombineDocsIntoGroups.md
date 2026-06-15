@@ -2,3 +2,6 @@
 
 - Prompt: "I do not like the duplication of the MD documents in the YML.  If things change (and they will) I would like to only have to worry about that in one place.  Please provide redundant information in the YML only when necessary"
 
+- Prompt: "Ah, you did what I asked but not what I intended.  You created the content in a document with a yml file name (as requested) but you didnt actually create YML content.  This would be embarrasing to me if people noticed in my presentation.  Make a copy of the original file with the same name but with an MD extension.  Then  create YML content in the file with the YML extension"
+
+- Observation: Now we can run the yml field like this : "run typescript\plans\MakePageObjectWithMBT.yml for html\SUT_ForDemo\support-request.html"
